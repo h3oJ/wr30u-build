@@ -1,0 +1,5 @@
+# 强制 LF 换行，防止 Windows CRLF 破坏 GitHub Actions 里的 shell 脚本
+*.sh text eol=lf
+*.yml text eol=lf
+.config text eol=lf
+*.md text eol=lf
