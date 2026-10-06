@@ -30,7 +30,7 @@ jobs:
           git clone --depth 1 --branch openwrt-24.10 \
             https://github.com/openwrt/openwrt.git openwrt
 
-      - name: Pre-build customization (diy-part1: add feeds)
+      - name: "Pre-build customization (diy-part1: add feeds)"
         run: |
           cd openwrt
           if [ -f ../diy-part1.sh ]; then bash ../diy-part1.sh; fi
@@ -44,7 +44,7 @@ jobs:
       - name: Apply custom config
         run: cp .config openwrt/.config
 
-      - name: Pre-build customization (diy-part2: bundle files)
+      - name: "Pre-build customization (diy-part2: bundle files)"
         run: |
           cd openwrt
           if [ -f ../diy-part2.sh ]; then bash ../diy-part2.sh; fi
@@ -75,7 +75,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: build-${{ github.run_number }}
-          name: WR30U OpenWrt 24.10 定制固件 #${{ github.run_number }}
+          name: "WR30U OpenWrt 24.10 定制固件 #${{ github.run_number }}"
           artifacts: "openwrt/bin/targets/mediatek/filogic/*.bin"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
