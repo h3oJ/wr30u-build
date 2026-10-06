@@ -14,6 +14,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -58,7 +60,7 @@ jobs:
         run: |
           cd openwrt
           make -j$(nproc) 2>&1 | tee ../build.log
-          if ! ls bin/targets/mediatek/filogic/*.bin >/dev/null 2>&1; then
+          if ! ls bin/targets/mediatek/filogic/*squashfs-sysupgrade* >/dev/null 2>&1; then
             echo "===== BUILD FAILED ====="
             grep -iE "error:|ERROR" ../build.log | head -50
             exit 1
@@ -68,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wr30u-openwrt-24.10-firmware
-          path: openwrt/bin/targets/mediatek/filogic/*.bin
+          path: openwrt/bin/targets/mediatek/filogic/*squashfs-sysupgrade*
           if-no-files-found: error
 
       - name: Publish release
@@ -76,6 +78,6 @@ jobs:
         with:
           tag: build-${{ github.run_number }}
           name: "WR30U OpenWrt 24.10 定制固件 #${{ github.run_number }}"
-          artifacts: "openwrt/bin/targets/mediatek/filogic/*.bin"
+          artifacts: "openwrt/bin/targets/mediatek/filogic/*squashfs-sysupgrade*"
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true

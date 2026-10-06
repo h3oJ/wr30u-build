@@ -28,7 +28,7 @@
 3. 进入仓库 **Actions** 标签页 → 左侧选 **Build WR30U OpenWrt 24.10** → **Run workflow**
    （push 到 main 也会自动触发）
 4. 等待约 **2~4 小时**（首次编译需下载工具链和源码）
-5. 编译完成自动发布 Release：**Releases** 页面下载 `...-squashfs-sysupgrade.bin`
+5. 编译完成自动发布 Release：**Releases** 页面下载 **`xiaomi_mi-router-wr30u-ubootmod-squashfs-sysupgrade.itb`**（你当前是 ubootmod 分区布局，选 `.itb` 这个，不要选 stock 的 `.bin`）
 
 ## 二、刷机（重要）
 
