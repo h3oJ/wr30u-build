@@ -55,15 +55,16 @@ jobs:
         run: |
           cd openwrt
           make defconfig
-          # 自检：确认 WR30U ubootmod 设备已进入编译列表（24.10 符号名为 CONFIG_TARGET_DEVICE_xxx）
-          if ! grep -q "CONFIG_TARGET_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" .config; then
+          # 自检：确认 WR30U ubootmod 设备已进入编译列表
+          # 24.10 设备符号格式：CONFIG_TARGET_DEVICE_<target>_<subtarget>_DEVICE_<device>
+          if ! grep -q "CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" .config; then
             echo "WARN: WR30U device missing after defconfig, injecting..."
-            echo "CONFIG_TARGET_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" >> .config
+            echo "CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" >> .config
             make defconfig
           fi
           echo "--- device config check ---"
-          grep -E "CONFIG_TARGET_DEVICE_" .config || true
-          grep -q "CONFIG_TARGET_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" .config || { echo "FATAL: WR30U device still not selected"; exit 1; }
+          grep -E "CONFIG_TARGET_DEVICE_.*wr30u" .config || true
+          grep -q "CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u-ubootmod=y" .config || { echo "FATAL: WR30U device still not selected"; exit 1; }
 
       - name: Build firmware
         run: |
